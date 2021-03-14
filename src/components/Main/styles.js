@@ -18,6 +18,9 @@ export default makeStyles((theme) => ({
   cartContent: {
     paddingTop: 0,
   },
+  headSpace: {
+    paddingTop: '15%',
+  },
   divider: {
     margin: '20px 0',
   },

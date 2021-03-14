@@ -1,14 +1,20 @@
 import { ADD_TO_LIST, ELIMINATE_FROM_LIST } from "./ListConstants";
 
- var initialState = [];
+ var initialState = JSON.parse(localStorage.getItem('transactions')) || [];
  var ListReducer = (state = initialState, action) =>{
+    let transactions;
     var {type, payload} = action;
+
     switch(type) {
          case ADD_TO_LIST:
-           return [...state, payload.Info,];
+           transactions = [...state, payload.Info];
+           localStorage.setItem('transactions', JSON.stringify(transactions));
+           return transactions;
          case ELIMINATE_FROM_LIST:
-            return state.filter((transaction) => transaction.ID != payload.transactionID);
-        default:
+            transactions = state.filter((transaction) => transaction.ID != payload.transactionID);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            return transactions;
+            default:
             return state;
     }
  }

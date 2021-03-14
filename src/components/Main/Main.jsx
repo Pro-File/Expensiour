@@ -18,15 +18,15 @@ const Main = ({list}) => {
     const Classes = UseStyles();
     return (
         <Card className={Classes.root}>
-            <CardHeader align="center" variant="h5"  title="Expensiour" subheader="All rights reserved to Muhammad Arbab"/>
+            <Typography className={Classes.headSpace} align="center" variant="h4"> Expensiour </Typography>
+            <CardHeader align="center" variant="h2"subheader="Developed by Muhammad Arbab"/>
             <CardContent>
                 <Typography align="center" variant="h5" >
             Total Balance: {`${Total}`}$
                 </Typography>
-                <Typography align="center" variant="subtitle1" style={{ lineHeight: '1.5em', marginTop: '20px'}}>
-            {/* {InfoCard} */}
+                {/* <Typography align="center" variant="subtitle1" style={{ lineHeight: '1.5em', marginTop: '20px'}}>
             try saying: Add income for 100$ in Category Salary for Monday
-                </Typography>
+                </Typography> */}
                 <Divider/>
                 {/* {Form} */}
                 <Form/>

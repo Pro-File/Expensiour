@@ -4,13 +4,18 @@ import UseStyles from './styles';
 import { v4 as uuid } from 'uuid';
 import {SetToList} from './../../../Redux/List/ListActions';
 import { connect } from 'react-redux';
+import formatDate from '../../../Utility/formatDate';
 import {incomeCategories, expenseCategories} from './../../../Constants/categories';
-
+import {useSpeechContext} from '@speechly/react-client';
+import SnackBar from '../../SnackBar/SnackBar';
 const Form = ({SetToList}) => {
     var [Type,setType] = useState("");
     var [Category,setCategory] = useState("");
     var [Ammount,setAmmount] = useState("");
-    var [Date,setDate] = useState("");
+    var [Dated,setDate] = useState(formatDate(new Date()));
+    const {segment} = useSpeechContext();
+    const [ open ,setOpen] = useState(false);
+
 
     const SelectedCategory = Type === "expense" ? expenseCategories :  incomeCategories;
    
@@ -23,18 +28,19 @@ const Form = ({SetToList}) => {
             Type,
             Category,
             Ammount,
-            Date,
+            Dated,
         }
         SetToList(Info);
+        setOpen(true);
         // console.log(Info);
     }
     const Classes = UseStyles();
     return (
         <Grid container spacing={2}>
-            
+            <SnackBar open={open} setOpen = {setOpen}/>
             <Grid item xs={12}>
             <Typography align="center" variant="subtitle2" gutterBottom>
-                ...
+                  {segment && segment.words.map((w)=> w.value).join(" ")}
             </Typography>
             </Grid>
     
@@ -65,8 +71,8 @@ const Form = ({SetToList}) => {
             </Grid>
 
             <Grid item xs={6}>
-            <TextField type="date" label="Date"  value={Date} 
-            onChange={(e) => setDate(e.target.value)} fullWidth/>
+            <TextField type="date" label="Date"  value={formatDate(Dated)} 
+            onChange={(e) => setDate(formatDate(e.target.value))} fullWidth/>
             </Grid>
             
             <Button fullWidth className={Classes.button} variant="outlined" type="submit" 

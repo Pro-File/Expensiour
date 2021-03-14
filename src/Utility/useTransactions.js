@@ -3,31 +3,26 @@ import { connect } from 'react-redux';
 import {incomeCategories, expenseCategories, resetCategories} from './../Constants/categories';
 const useTransactions = ({title, list}) => {
     resetCategories();
-    const TransactionPerType = list.filter((trans)=> trans.Type === title);
-    const total  = TransactionPerType.reduce((acc, currentVal)=> acc+= parseFloat(currentVal.Ammount), 0);
+    const TransactionsPerType = list.filter((trans) => trans.Type === title);
+    const total = TransactionsPerType.reduce((acc, currVal) => acc += parseFloat(currVal.Ammount), 0);
     const categories = title === 'income' ? incomeCategories : expenseCategories;
-    console.log({TransactionPerType, total, categories});
-    TransactionPerType.forEach((trans)=> {
-        const CategorizedCategory = categories.find((categ)=> categ.Type === categ.Category)
-        if(CategorizedCategory){
-            CategorizedCategory.Ammount += parseFloat(trans.Ammount)
-        } 
+    // console.log({TransactionsPerType, total, categories});
+
+    TransactionsPerType.forEach(t => {
+        const category = categories.find((c)=> c.Type === t.Category)
+
+        if(category) category.Ammount += t.Ammount;
     });
-    console.log(categories)
-    const FilteredCategory = TransactionPerType.filter((categ)=> categ.Ammount > 0);
-    console.log(FilteredCategory)
+
+    const FilteredCategories = categories.filter((c) => parseFloat(c.Ammount) > 0);
     const ChartData = {
         datasets: [{
-            data: FilteredCategory.map((categ)=> categ.Ammount),
-            backgroundColor:  FilteredCategory.map((categ)=> categ.color)
+            data: FilteredCategories.map((c) => parseFloat(c.Ammount)),
+            backgroundColor: FilteredCategories.map((c) => c.color)
         }],
-        labels: FilteredCategory.map((categ)=> categ.Category)
-
+        labels: FilteredCategories.map((c) => c.Type)
     }
-    console.log(ChartData);
-    return {FilteredCategory, total, ChartData};
-    // console.log(title, list);
-
+    return {total, ChartData};
 }
 
 
