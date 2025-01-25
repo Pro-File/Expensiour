@@ -19,10 +19,10 @@ const Main = ({list}) => {
     return (
         <Card className={Classes.root}>
             <Typography className={Classes.headSpace} align="center" variant="h4"> Expensiour </Typography>
-            <CardHeader align="center" variant="h2"subheader="Developed by Muhammad Arbab"/>
+            <CardHeader align="center" variant="h2" subheader="Developed by Muhammad Arbab"/>
             <CardContent>
                 <Typography align="center" variant="h5" >
-            Total Balance: {`${Total}`}$
+            Total Balance: {`${Total}`} PKR
                 </Typography>
                 {/* <Typography align="center" variant="subtitle1" style={{ lineHeight: '1.5em', marginTop: '20px'}}>
             try saying: Add income for 100$ in Category Salary for Monday

@@ -4,12 +4,14 @@ import {Delete, MoneyOff} from '@material-ui/icons';
 import {EliminateFromList} from './../../../Redux/List/ListActions'
 import UseStyles from './styles';
 import { connect } from 'react-redux';
+import useTransaction from '../../../Services/transaction';
 
 const List = ({list, EliminateFromList}) => {
     const Classes = UseStyles();
-    // const transactions = [];
+    const {removeTransaction} = useTransaction();
     return (
       <MUIList dense={false} className={Classes.list}>
+        {console.log("List: ", list)}
           {list.map((transaction) => (
               <Slide direction="down" in mountOnEnter unmountOnExit key={transaction.ID}>
                   <ListItem>
@@ -18,9 +20,9 @@ const List = ({list, EliminateFromList}) => {
                          <MoneyOff/>   
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary={transaction.Category} secondary={`$${transaction.Ammount} - ${transaction.Date}`}/>
+                    <ListItemText primary={transaction.Category} secondary={`PKR ${transaction.Ammount} - ${new Date(transaction.Dated).toDateString()}`}/>
                     <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete"onClick={(e) => EliminateFromList(transaction.ID)}>
+                        <IconButton edge="end" aria-label="delete"onClick={(e) => removeTransaction(transaction, EliminateFromList)}>
                         <Delete/>
                         </IconButton>
                     </ListItemSecondaryAction>

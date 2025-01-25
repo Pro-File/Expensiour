@@ -7,14 +7,17 @@ const useTransactions = ({title, list}) => {
     const total = TransactionsPerType.reduce((acc, currVal) => acc += parseFloat(currVal.Ammount), 0);
     const categories = title === 'income' ? incomeCategories : expenseCategories;
     // console.log({TransactionsPerType, total, categories});
-
+    
     TransactionsPerType.forEach(t => {
         const category = categories.find((c)=> c.Type === t.Category)
 
-        if(category) category.Ammount += t.Ammount;
+        if(category) {
+            (category.Ammount) += parseInt(t.Ammount)
+        };
     });
 
     const FilteredCategories = categories.filter((c) => parseFloat(c.Ammount) > 0);
+
     const ChartData = {
         datasets: [{
             data: FilteredCategories.map((c) => parseFloat(c.Ammount)),
