@@ -23,15 +23,18 @@ function useTransaction() {
     }
   };
 
-  const getAllTransactions = async () => {
+  const getAllTransactions = async (currentMonth) => {
     try {
       // Fetch all transactions from
       // the database
       const collectionRef = collection(db, "transaction");
       const snapshot = await getDocs(collectionRef);
-      const transactions = snapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id };
+      const data = snapshot.docs.map((doc) => {
+        // Fetch Month Wise Transactions based on the "Dated" field in doc
+        const month = doc.data().Dated.split("-");
+        return { ...doc.data(), id: doc.id, month: `${month[0]}-${month[1]}` };
       });
+      const transactions = data.filter((doc) => doc.month === currentMonth);
       return transactions;
     } catch (error) {
       console.error("Error While Fetching Transactions: ", error);

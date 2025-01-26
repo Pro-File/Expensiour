@@ -1,24 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {Grid} from '@material-ui/core';
 import Details from './components/Details/Details';
 import Main from './components/Main/Main';
-import {PushToTalkButtonContainer, PushToTalkButton, ErrorPanel} from '@speechly/react-ui';
 import useStyles from './styles';
-import useTransaction from './Services/transaction';
-import { connect } from 'react-redux';
-import { SetTransactionsList } from './Redux/List/ListActions';
-const App = ({SetTransactionsList}) => {
+const App = () => {
     const classes = useStyles();
-    const {getAllTransactions} = useTransaction();
-
-    const getAll = async() => {
-        const transactions = await getAllTransactions();
-        SetTransactionsList(transactions);
-    }
-
-    useEffect(() => {
-        getAll();
-    }, [])
     
     return (
         <div>
@@ -44,7 +30,4 @@ const App = ({SetTransactionsList}) => {
     )
 }
 
-var actions = {
-    SetTransactionsList,
-}
-export default connect(null, actions)(App);
+export default App;
